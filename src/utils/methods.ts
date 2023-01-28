@@ -62,7 +62,6 @@ export const getFilteredRestaurants = (
   return restaurantFilteredBySimplifiedMarketSegment;
 };
 
-// TODO: Add tests
 /**
  * Returns a list of all Restaurants that match with search
  * @param restaurantToFilter
@@ -71,10 +70,15 @@ export const getFilteredRestaurants = (
  */
 export const getRestaurantsFilteredByName = (
   restaurantToFilter: Array<RestaurantDTO>,
-  search: string
+  query: string
 ): Array<RestaurantDTO> => {
   return restaurantToFilter.filter((item: RestaurantDTO) => {
-    return item.businessName === search;
+    if (item.businessName) {
+      const queryText = query.toLocaleLowerCase();
+      return item.businessName.toLocaleLowerCase().search(queryText) !== -1;
+    }
+
+    return false;
   });
 };
 
