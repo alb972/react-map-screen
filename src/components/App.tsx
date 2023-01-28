@@ -7,7 +7,8 @@ export default function App(): JSX.Element {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route index element={<Home />} />
+        <Route path="home" element={<Home />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>

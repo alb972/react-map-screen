@@ -2,6 +2,7 @@
 import { createTheme } from "@mui/material/styles";
 
 export const APPNAME = "web-app";
+export const MAPBOX_TOKEN = "pk.eyJ1IjoiZHRoaWIiLCJhIjoiY2tod2FjcWpiNWJkaDM1bDZ5b2ZqeGVweiJ9.cRnbp_ra6HirjBUG0byyNA"; // Set your mapbox token here
 
 export const THEME_STYLE = createTheme({
   palette: {
