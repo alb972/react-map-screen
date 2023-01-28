@@ -1,0 +1,14 @@
+node_modules
+bin/*
+dist/*
+build/*
+docs/*
+tools/*
+production_node_modules/*
+test/fixtures/*
+tmp/*
+jest.config.js
+babel.config.js
+src/serviceWorker.ts
+src/components/shared/icons
+__tests__/*
