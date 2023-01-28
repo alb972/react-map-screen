@@ -17,8 +17,8 @@ const getCSVText = async (): Promise<string> => {
  * Returns available Restaurants informations
  * @returns Promise<APIResult<Array<RestaurantDTO>>>
  */
-const getRestaurants = (filter: RestaurantFilter | null): Promise<APIResult<Array<RestaurantDTO>>> => {
-  return new Promise((resolve, reject) => {
+const getRestaurants = (filter: RestaurantFilter): Promise<APIResult<Array<RestaurantDTO>>> => {
+  return new Promise((resolve) => {
     try {
       getCSVText().then((text) => {
         if (text != null) {
@@ -27,7 +27,8 @@ const getRestaurants = (filter: RestaurantFilter | null): Promise<APIResult<Arra
             skipEmptyLines: true,
             complete: (results) => {
               const restaurants: Array<RestaurantDTO> = Utils.getRestaurantsList(results);
-              resolve({ type: "success", value: restaurants });
+              const filtered = Utils.getFilteredRestaurants(restaurants, filter);
+              resolve({ type: "success", value: filtered });
             },
           });
         } else {
@@ -45,7 +46,7 @@ const getRestaurants = (filter: RestaurantFilter | null): Promise<APIResult<Arra
  * @returns Promise<APIResult<Array<string>>>
  */
 const getAvailableSimplifiedMarketSegments = (): Promise<APIResult<Array<string>>> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     try {
       getCSVText().then((text) => {
         if (text != null) {

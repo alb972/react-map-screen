@@ -1,4 +1,4 @@
 export interface RestaurantFilter {
-  restaurantSearch: string;
-  simplifiedMarketSegment: string;
+  restaurantSearch: string | null;
+  simplifiedMarketSegmentSearch: string | null;
 }
