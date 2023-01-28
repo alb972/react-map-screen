@@ -32,57 +32,55 @@ export const FilterCard = (props: FilterCardProps): JSX.Element => {
 
   const submit = React.useCallback(() => {
     onSubmitClickHandler({
-      restaurantSearch: restaurantNameSearch,
-      simplifiedMarketSegment: simplifiedMarketSegmentSearch,
+      restaurantSearch: restaurantNameSearch.length > 0 ? restaurantNameSearch : null,
+      simplifiedMarketSegmentSearch: simplifiedMarketSegmentSearch.length > 0 ? simplifiedMarketSegmentSearch : null,
     });
   }, [restaurantNameSearch, simplifiedMarketSegmentSearch]);
 
   return (
-    <Box sx={{ display: "flex", flex: 1 }}>
-      <Card
-        sx={{
-          flex: 1,
-          boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;",
-          display: "flex",
-          paddingTop: "16px",
-        }}>
-        <CardContent sx={{ display: "flex", flexDirection: "column", flex: "1 0 auto", paddingTop: 0 }}>
-          <Box sx={{ padding: "20px 0 20px 0" }}>
-            <Typography variant="h4" color="text.primary" component="div">
-              {title}
-            </Typography>
-          </Box>
-          <RestaurantNameInput
-            label={restauranNameFieldLabel}
-            currentValue={restaurantNameSearch}
-            onUpdateSearch={(value: string) => {
-              setRestaurantNameSearch(value);
-            }}
-          />
-          <SimplifiedMarketSegmentInput
-            label={simplifiedMarketSegmentFieldLabel}
-            currentValue={simplifiedMarketSegmentSearch}
-            choices={availableSimplifiedMarketSegments}
-            onUpdateSearch={(value: string) => {
-              setSimplifiedMarketSegmentSearch(value);
-            }}
-          />
-          <Box sx={{ display: "flex", flex: 1, alignItems: "flex-end", padding: "8px 0" }}>
-            <Button
-              variant="contained"
-              className={classes.customCancelBtn}
-              onClick={() => {
-                onCancelClickHandler();
-              }}>
-              {cancelBtnText}
-            </Button>
-            <Button variant="contained" className={classes.customSubmitBtn} onClick={submit}>
-              {submitBtnText}
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
-    </Box>
+    <Card
+      sx={{
+        maxWidth: "600px",
+        boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;",
+      }}>
+      <CardContent sx={{ padding: "16px" }}>
+        <Box sx={{ padding: "20px 0 20px 0" }}>
+          <Typography variant="h4" color="text.primary" component="div">
+            {title}
+          </Typography>
+        </Box>
+        <RestaurantNameInput
+          label={restauranNameFieldLabel}
+          currentValue={restaurantNameSearch}
+          onUpdateSearch={(value: string) => {
+            setRestaurantNameSearch(value);
+          }}
+        />
+        <SimplifiedMarketSegmentInput
+          label={simplifiedMarketSegmentFieldLabel}
+          currentValue={simplifiedMarketSegmentSearch}
+          choices={availableSimplifiedMarketSegments}
+          onUpdateSearch={(value: string) => {
+            setSimplifiedMarketSegmentSearch(value);
+          }}
+        />
+        <Box sx={{ display: "flex", flex: 1, alignItems: "flex-end", padding: "8px 0" }}>
+          <Button
+            variant="contained"
+            className={classes.customCancelBtn}
+            onClick={() => {
+              setRestaurantNameSearch("");
+              setSimplifiedMarketSegmentSearch("");
+              onCancelClickHandler();
+            }}>
+            {cancelBtnText}
+          </Button>
+          <Button variant="contained" className={classes.customSubmitBtn} onClick={submit}>
+            {submitBtnText}
+          </Button>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

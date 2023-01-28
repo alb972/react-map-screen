@@ -28,10 +28,16 @@ export const Home = (): JSX.Element => {
   // TODO: Manage translations with i18n
   const TopBarPageTitle = "Restaurants";
 
+  const initialFilterState = {
+    restaurantSearch: null,
+    simplifiedMarketSegmentSearch: null,
+  };
+
   // Local state(s)
+  const [totalRestaurants, setTotalRestaurants] = React.useState<number>(0);
   const [restaurantGeoData, setRestaurantGeoData] = React.useState<any>(null);
   const [allSimplifiedMarketSegments, setAllSimplifiedMarketSegments] = React.useState<Array<string>>([]);
-  const [filter, setFilter] = React.useState<RestaurantFilter | null>(null);
+  const [filter, setFilter] = React.useState<RestaurantFilter>(initialFilterState);
 
   React.useEffect(() => {
     getRestaurantData();
@@ -44,6 +50,7 @@ export const Home = (): JSX.Element => {
     const restaurantsResponse: APIResult<Array<RestaurantDTO>> = await API.getRestaurants(filter);
     if (restaurantsResponse.type === "success") {
       restaurants = restaurantsResponse.value;
+      setTotalRestaurants(restaurants.length);
     } else {
       console.error("Oops something went wrong!", restaurantsResponse.error);
     }
@@ -68,15 +75,15 @@ export const Home = (): JSX.Element => {
 
   return (
     <Box sx={{ minWidth: "1024px", maxWidth: "1524px", padding: "0 64px 0 64px" }}>
-      <TopBar title={TopBarPageTitle} />
-      <HorizontalListTemplate spacer={<SpacerMedium />}>
+      <TopBar title={TopBarPageTitle} total={totalRestaurants} />
+      <HorizontalListTemplate space={2}>
         <Map
           initialViewState={{
-            longitude: -122.4,
-            latitude: 37.8,
-            zoom: 14,
+            longitude: 2.252197,
+            latitude: 46.286461,
+            zoom: 4,
           }}
-          style={{ width: 1024, height: 728 }}
+          style={{ width: 600, height: 400 }}
           mapStyle="mapbox://styles/mapbox/streets-v9"
           mapboxAccessToken={Constants.MAPBOX_TOKEN}>
           <Source id="my-data" type="geojson" data={restaurantGeoData}>
@@ -86,7 +93,7 @@ export const Home = (): JSX.Element => {
         <FilterCard
           availableSimplifiedMarketSegments={allSimplifiedMarketSegments}
           onCancelClickHandler={() => {
-            setFilter(null);
+            setFilter(initialFilterState);
           }}
           onSubmitClickHandler={(newFilter: RestaurantFilter) => {
             setFilter(newFilter);
@@ -97,14 +104,13 @@ export const Home = (): JSX.Element => {
   );
 };
 
-export const TopBar = (props: { title: string }): JSX.Element => {
-  const { title } = props;
-  const classes = useStyles();
+export const TopBar = (props: { title: string; total: number }): JSX.Element => {
+  const { title, total } = props;
 
   return (
     <Box sx={{ display: "flex", justifyContent: "space-between", margin: "20px 0 20px 0" }}>
       <Typography variant="h4" color="text.primary" component="div">
-        {title}
+        {`${title} - ${total} resultat(s)`}
       </Typography>
     </Box>
   );

@@ -40,11 +40,8 @@ npm run build
 - [] Use the geojson display format:
   - [https://visgl.github.io/react-map-gl/docs/get-started/adding-custom-data](https://visgl.github.io/react-map-gl/docs/get-started/adding-custom-data)).
   - Use TOP_PDV_Fyre_FR_Extract_100.csv
-- [] Permettre de filtrer en utilisant le nom au restaurant
-  (idéalement en étant robuste aux erreurs de frappe: trouver les pizzeria
-  lorsqu’on tape piza )
-- [] Permettre de filtrer en utilisant une sélection par **Simplified Market Segment**
-  (une des colonnes du CSV)
+- [] Allow to filter using restaurant name
+- [] Allow to filter using **Simplified Market Segment**
 
 ---
 
